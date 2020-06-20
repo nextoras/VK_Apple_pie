@@ -9,13 +9,16 @@ import {Views, PanelsByView, ViewName, PanelName, ModalName} from "./constants/s
 
 import { Modal } from './Views/OnBoarding/Modal';
 import SelectCloth from "./Views/OnBoarding/SelectCloth";
+import SizeCloth from "./Views/OnBoarding/SizeCloth";
+import BuyCloth from "./Views/OnBoarding/BuyCloth";
 
 import Home from './panels/Home/Home';
-import Persik from './panels/Persik/Persik';
+import Persik from './panels/Persik/Persik'
 
 const App = () => {
     const [activeView, setActiveView] = useState(ViewName.OnBoarding)
     const [activeModal, setActiveModal] = useState(ModalName.SelectCloth)
+    const [currentModal, setCurrentModal] = useState(ModalName.SizeCloth);
     const [activePanel, setActivePanel] = useState(PanelsByView[ViewName.OnBoarding][0]);
     const [fetchedUser, setUser] = useState(null);
     const [popout, setPopout] = useState(<ScreenSpinner size="large" />);
@@ -30,19 +33,15 @@ const App = () => {
             }
         });
         async function fetchData() {
-            const user = await bridge.send('VKWebAppGetUserInfo');
+            // const user = await bridge.send('VKWebAppGetUserInfo');
 
-            setUser(user);
+            // setUser(user);
             setPopout(null);
         }
-        // fetchData();
+        fetchData();
     }, []);
 
-    const go = e => {
-        console.log('go')
-        setActivePanel(e.currentTarget.dataset.to);
-    };
-
+    console.log(activePanel, activeView, activeModal, currentModal)
     return (
         <Root activeView={activeView}>
             <View
@@ -55,14 +54,15 @@ const App = () => {
                             setActiveModal(modal);
                             setActivePanel(panel);
                             setActiveView(view);
-                        }
+                            console.log('next', modal, panel, modal)
+                        },
+                        modalBack: () => {setActiveModal(null)}
                     })}
+                id={ViewName.OnBoarding}
             >
                 <SelectCloth id={PanelName.SelectCloth} />
-            </View>
-            <View activePanel={activePanel} popout={popout} modal={Modal(activeModal)}>
-                <Home id fetchedUser={fetchedUser} go={go} />
-                <Persik id="persik" go={go} />
+                <SizeCloth id={PanelName.SizeCloth} />
+                <BuyCloth id={PanelName.BuyCloth} />
             </View>
         </Root>
     );

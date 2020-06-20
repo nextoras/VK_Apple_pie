@@ -4,14 +4,16 @@ import { Panel } from '@vkontakte/vkui';
 
 import OnBoarding from '../../assets/Onboarding2.png'
 
+import style from './OnBoarding.css';
+
 interface SelectClothProps {
-    id: string
+    id: string;
 }
 
-const SizeCloth = (id: SelectClothProps) => {
+const SizeCloth = (props: SelectClothProps) => {
     return (
-        <Panel id={id}>
-            <img src={OnBoarding} alt="OnBoarding size clothes"/>
+        <Panel id={props.id}>
+            <img src={OnBoarding} alt="OnBoarding size clothes" className={style.onBoardingImage}/>
         </Panel>
     )
 }
