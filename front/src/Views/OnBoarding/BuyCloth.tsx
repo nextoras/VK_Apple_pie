@@ -4,7 +4,7 @@ import { Panel } from '@vkontakte/vkui';
 
 import OnBoarding from '../../assets/Onboarding3.png'
 
-import style from './OnBoarding.css';
+import './OnBoarding.css';
 
 interface BuyClothProps {
     id: string;
@@ -13,7 +13,7 @@ interface BuyClothProps {
 const BuyCloth = (props: BuyClothProps) => {
     return (
         <Panel id={props.id}>
-            <img src={OnBoarding} alt="OnBoarding buy clothes" className={style.onBoardingImage} />
+            <img src={OnBoarding} alt="OnBoarding buy clothes" className="onBoardingImage" />
         </Panel>
     )
 }

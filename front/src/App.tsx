@@ -11,9 +11,11 @@ import { Modal } from './Views/OnBoarding/Modal';
 import SelectCloth from "./Views/OnBoarding/SelectCloth";
 import SizeCloth from "./Views/OnBoarding/SizeCloth";
 import BuyCloth from "./Views/OnBoarding/BuyCloth";
+import GetSizesPanel from "./Views/GetSizes/GetSizesPanel";
 
 import Home from './panels/Home/Home';
 import Persik from './panels/Persik/Persik'
+import HelpSizeModal from "./Views/GetSizes/HelpSizeModal";
 
 const App = () => {
     const [activeView, setActiveView] = useState(ViewName.OnBoarding)
@@ -63,6 +65,17 @@ const App = () => {
                 <SelectCloth id={PanelName.SelectCloth} />
                 <SizeCloth id={PanelName.SizeCloth} />
                 <BuyCloth id={PanelName.BuyCloth} />
+            </View>
+            <View
+                id={ViewName.GetSizes}
+                activePanel={activePanel}
+                popout={popout}
+                modal={HelpSizeModal({
+                    activeModal,
+                    modalBack: () => { setActiveModal(null) }
+                })}
+            >
+                <GetSizesPanel id={PanelName.Upload} setActiveModal={setActiveModal} />
             </View>
         </Root>
     );

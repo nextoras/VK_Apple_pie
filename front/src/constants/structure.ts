@@ -17,6 +17,7 @@ export enum ModalName {
     SelectCloth = "ModalSelectCloth",
     SizeCloth = "ModalSizeCloth",
     BuyCloth = 'ModalBuyCloth',
+    HelpSizes = 'HelpSizes'
 }
 
 export const Views = ['OnBoarding', 'GetSizes', 'Catalog']

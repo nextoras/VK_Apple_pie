@@ -1,0 +1,17 @@
+.sizeImages {
+    width: 95%;
+    margin: auto;
+    display: flex;
+}
+
+.sizeImage {
+    width: 45%;
+    min-height: 200px;
+    max-width: 350px;
+    margin: 5px;
+}
+
+.uploadSizePhoto {
+    width: 150px;
+    margin: auto;
+}
