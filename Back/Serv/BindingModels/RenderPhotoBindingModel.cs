@@ -8,19 +8,16 @@ using System.Drawing;
 
 namespace Vk_server
 {
-    public class SizePhotosBindingModel
+    public class RenderPhotoBindingModel
     {
 
         /// <summary>
         /// Фронтальное фото
         /// </summary>
-        public Image PhotoFront { get; set; }
+        public IFormFile Photo { get; set; }
 
-        /// <summary>
-        /// Боковое фото
-        /// </summary>
 
-        public Image PhotoSide { get; set; }
+        public long ClothingId { get; set; }
 
         public long UserId { get; set; }
 

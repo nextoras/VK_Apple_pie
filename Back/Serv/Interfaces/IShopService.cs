@@ -7,6 +7,7 @@ namespace Vk_server
     public interface IShopService
     {
         Task <ShopDTO> GetAllAsync(long sex);
-        Task <ClotheDTO> GetClothingAsync(long clothingId);
+        Task <ClotheDTOFull> GetClothingAsync(long clothingId, long userId);
+        Task <string> GetRenderPhotoAsync(long clothingId, long userId);
     }
 }

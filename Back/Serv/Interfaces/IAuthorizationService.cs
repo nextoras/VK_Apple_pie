@@ -6,6 +6,6 @@ namespace Vk_server
 {
     public interface IAuthorizationService
     {
-        Task AuthorizeAsync(long user_id, string firstName, string lastName, long sexId);
+        Task<bool> AuthorizeAsync(long user_id, string firstName, string lastName, long sexId);
     }
 }

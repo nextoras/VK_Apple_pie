@@ -43,7 +43,7 @@ namespace Vk_server
 
         public async Task<bool> PushPhotoAsync(IFormFile photo1, IFormFile photo2, long userId)
         {
-            var user = _uow.Users.Query().Where(q => q.VkId == userId).FirstOrDefaultAsync();
+            var user = await _uow.Users.Query().Where(q => q.VkId == userId).FirstOrDefaultAsync();
 
             if (user == null) throw new Exception("Юзер не найден");
 
@@ -92,18 +92,19 @@ namespace Vk_server
             if (user == null) throw new Exception("User не найден");
 
             UserDTO userDTO = new UserDTO();
-            SizeDTO sizeDTO = new SizeDTO();
+            userDTO.Sizes = new UserParametersDTO();
+            UserParametersDTO sizeDTO = new UserParametersDTO();
 
-            var sizes = await _uow.Sizes.Query()
+            var sizes = await _uow.UserParameters.Query()
                 .Where(l => l.UserId == user.Id).FirstOrDefaultAsync();
+
+            userDTO = _mapper.Map<UserDTO>(user);
 
             if (sizes != null)
             {
-                sizeDTO = _mapper.Map<SizeDTO>(sizes);
+                sizeDTO = _mapper.Map<UserParametersDTO>(sizes);
                 userDTO.Sizes = sizeDTO;
             }
-
-            userDTO = _mapper.Map<UserDTO>(user);
 
             return userDTO;
 

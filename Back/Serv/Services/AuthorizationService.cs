@@ -28,7 +28,7 @@ namespace Vk_server
             _uow = uow;
         }
 
-        public async Task AuthorizeAsync(long user_id, string firstName, string lastName, long sexId)
+        public async Task<bool> AuthorizeAsync(long user_id, string firstName, string lastName, long sexId)
         {
             var user = await _uow.Users.Query()
                 .Where(us => us.VkId == user_id).FirstOrDefaultAsync();
@@ -45,7 +45,11 @@ namespace Vk_server
                 });
 
                 await _uow.SaveChangesAsync();
-            }
+
+                return false;
+            } 
+            else 
+                return true;
         }
 
 

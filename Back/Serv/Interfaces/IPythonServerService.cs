@@ -7,8 +7,10 @@ namespace Vk_server
 {
     public interface IPythonServerService
     {
-        Task SendPhotosForSizesAsync(IFormFile photo1, IFormFile photo2);
+        Task SendPhotosForSizesAsync(long clothingId, long userId);
 
         Task SaveSizesAsync(ReadySizesBindingModel model);
+
+        Task SaveRenderPhotoAsync(IFormFile photo, long clothingId, long userId);
     }
 }

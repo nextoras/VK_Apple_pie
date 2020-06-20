@@ -56,6 +56,20 @@ namespace Vk_server
             return Ok();
         }
 
-        
+        /// <summary>
+        /// Returns info about all events
+        /// </summary>
+        /// <param name="model">model</param>
+        /// <returns></returns>
+        [HttpPost("rednder")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> SaveRenderPhoto([FromBody] RenderPhotoBindingModel model)
+        {
+            await _pythonServerService.SaveRenderPhotoAsync(model.Photo, model.ClothingId, model.UserId);
+
+            return Ok();
+        }
     }
 } 

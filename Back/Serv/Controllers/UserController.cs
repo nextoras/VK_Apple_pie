@@ -49,11 +49,11 @@ namespace Vk_server
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> PutPhoto(long userId)
+        public async Task<IActionResult> GetUserInfo(long userId)
         {
             var result = await _userService.GetUserInfoAsync(userId);
 
-            return Ok();
+            return Ok(result);
         }
     }
 } 

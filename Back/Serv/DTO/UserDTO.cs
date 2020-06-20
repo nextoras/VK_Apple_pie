@@ -11,10 +11,10 @@ namespace Vk_server
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long SexId { get; set; }
-        public SizeDTO Sizes { get; set; }
+        public UserParametersDTO Sizes { get; set; }
     }
 
-    public class SizeDTO
+    public class UserParametersDTO
     {
         public double Chest { get; set; }
         public double Waist { get; set; }
