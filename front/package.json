@@ -1,0 +1,78 @@
+{
+  "name": "show-room",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "lint:style": "stylelint src/**/*.css --formatter=verbose",
+    "lint:style:fix": "stylelint src/**/*.css --formatter=verbose --fix && git add .",
+    "prelint:es": "prettier --write \"**/*.{ts,js,tsx}\"",
+    "prelint:es:ci": "prettier --check \"**/*.{ts,js,tsx}\"",
+    "lint:es": "eslint --fix \"**/*.{ts,js,tsx}\"",
+    "lint:es:ci": "eslint --format ./node_modules/eslint-teamcity/index.js \"**/*.{ts,js,tsx}\"",
+    "build": "webpack --config config/webpack.prod.js",
+    "start": "webpack-dev-server --open --config config/webpack.dev.js",
+    "start:prod": "serve dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tinkoff/linters": "^1.0.0-rc.5",
+    "@types/css-modules": "^1.0.0",
+    "@types/file-loader": "^4.2.0",
+    "@types/react-redux": "^7.1.7",
+    "@types/react-router": "^5.1.1",
+    "autoprefixer": "^9.7.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "eruda": "^2.3.3",
+    "eruda-code": "^2.0.0",
+    "eruda-dom": "^2.0.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "lint-staged": "^10.1.7",
+    "postcss-calc": "^7.0.2",
+    "postcss-custom-properties": "^9.1.1",
+    "postcss-global-import": "^1.0.6",
+    "postcss-loader": "^3.0.0",
+    "postcss-nested": "^4.2.1",
+    "style-loader": "^1.0.0",
+    "stylelint": "^10.1.0",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.13",
+    "@material-ui/lab": "^4.0.0-alpha.52",
+    "@tinkoff/utils": "^2.1.2",
+    "@vkontakte/icons": "^1.26.0",
+    "@vkontakte/vk-bridge": "^2.2.2",
+    "@vkontakte/vk-miniapps-deploy": "0.0.17",
+    "@vkontakte/vkui": "^3.11.2",
+    "antd": "^4.2.0",
+    "react": "^16.9.0",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "serve": "^11.3.0"
+  },
+  "pre-commit": [
+    "lint:style",
+    "lint-staged"
+  ]
+}
