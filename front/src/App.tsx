@@ -4,6 +4,7 @@ import { Root } from "@vkontakte/vkui";
 import View from '@vkontakte/vkui/dist/components/View/View';
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 import '@vkontakte/vkui/dist/vkui.css';
+import { connect, ConnectedProps } from "react-redux";
 
 import {Views, PanelsByView, ViewName, PanelName, ModalName} from "./constants/structure";
 
@@ -13,11 +14,18 @@ import SizeCloth from "./Views/OnBoarding/SizeCloth";
 import BuyCloth from "./Views/OnBoarding/BuyCloth";
 import GetSizesPanel from "./Views/GetSizes/GetSizesPanel";
 
-import Home from './panels/Home/Home';
-import Persik from './panels/Persik/Persik'
 import HelpSizeModal from "./Views/GetSizes/HelpSizeModal";
+import CatalogAllItems from "./Views/Catalog/CatalogAllItems";
 
-const App = () => {
+import getUser from "./actions/user/getUser";
+
+const mapDispatchToProps = {
+    getUser
+}
+
+const storeEnhancer = connect(null, mapDispatchToProps)
+
+const App = (props: ConnectedProps<typeof storeEnhancer>) => {
     const [activeView, setActiveView] = useState(ViewName.OnBoarding)
     const [activeModal, setActiveModal] = useState(ModalName.SelectCloth)
     const [currentModal, setCurrentModal] = useState(ModalName.SizeCloth);
@@ -35,9 +43,15 @@ const App = () => {
             }
         });
         async function fetchData() {
-            // const user = await bridge.send('VKWebAppGetUserInfo');
+            const user = {id: 1}//const user = await bridge.send('VKWebAppGetUserInfo');
+            const authorized = await props.getUser(user.id);
 
-            // setUser(user);
+            if (authorized) {
+                setActiveView(ViewName.Catalog);
+                setActivePanel(PanelName.All);
+            }
+
+            setUser(user);
             setPopout(null);
         }
         fetchData();
@@ -75,10 +89,13 @@ const App = () => {
                     modalBack: () => { setActiveModal(null) }
                 })}
             >
-                <GetSizesPanel id={PanelName.Upload} setActiveModal={setActiveModal} />
+                <GetSizesPanel id={PanelName.Upload} setActiveModal={setActiveModal} user={fetchedUser}/>
+            </View>
+            <View activePanel={activePanel} id={ViewName.Catalog}>
+                <CatalogAllItems id={PanelName.All} />
             </View>
         </Root>
     );
 };
 
-export default App;
+export default storeEnhancer(App);

@@ -1,0 +1,8 @@
+.itemCard {
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.itemCardImage {
+    max-height: 224px;
+}

@@ -2,11 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
+import {Provider} from "react-redux";
+import {applyMiddleware, createStore} from "redux";
+import thunk from "redux-thunk";
+
+import rootReducer from './reducers';
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById("root"));
 if (process.env.NODE_ENV === "development") {
     import("./eruda").then(({ default: eruda }) => {}); //runtime download
 }

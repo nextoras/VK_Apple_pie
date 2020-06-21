@@ -9,7 +9,7 @@ const index = path.resolve(__dirname, '../src/index.html');
 const postcss = path.resolve(__dirname, './styles');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const API_HOST = process.env.API_HOST || 'https://protected-mountain-30162.herokuapp.com';
+const API_HOST = process.env.API_HOST || 'http://95.163.251.29/api';
 const CONTENT_HOST =
     process.env.CONTENT_HOST ||
     'https://protected-mountain-30162.herokuapp.com/images/fake';
