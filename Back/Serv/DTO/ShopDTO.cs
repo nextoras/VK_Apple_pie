@@ -22,4 +22,16 @@ namespace Vk_server
         public string Link { get; set; }
         public long ShopId { get; set; }
     }
+
+    public class ClotheDTOFull : ClotheDTO
+    {
+        public List<SizeDTO> SizeDTOs { get; set; }
+    }
+
+    public class SizeDTO
+    {
+        public long id { get; set;}
+        public string SizeName { get; set;}
+        public  double? SizeN { get; set; }
+    }
 }

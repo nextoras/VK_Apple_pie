@@ -22,12 +22,12 @@ namespace Vk_server
         }
 
         /// <summary>
-        /// Returns info about all events
+        /// Create user
         /// </summary>
-        /// <param name="access_token">message</param>
-        /// <param name="expires_in">event identifier</param>
-        /// <param name="user_id">distance identifier</param>
-        /// <param name="state">state</param>
+        /// <param name="user_id">message</param>
+        /// <param name="firstName">event identifier</param>
+        /// <param name="lastName">distance identifier</param>
+        /// <param name="sexId">state</param>
         /// <returns></returns>
         [HttpPost("init")]
         [AllowAnonymous]
@@ -35,9 +35,9 @@ namespace Vk_server
         [ProducesResponseType(404)]
         public async Task<IActionResult> Authorization(long user_id, string firstName, string lastName, long sexId)
         {
-            await _authorizationService.AuthorizeAsync( user_id, firstName, lastName, sexId );
+            var result = await _authorizationService.AuthorizeAsync( user_id, firstName, lastName, sexId );
 
-            return Ok();
+            return Ok(result);
         }
 
         

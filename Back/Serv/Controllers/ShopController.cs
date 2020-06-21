@@ -26,7 +26,7 @@ namespace Vk_server
         /// <summary>
         /// Returns info about all events
         /// </summary>
-        /// <param name="sex">sex</param>
+        /// <param name="sexId">sex</param>
         /// <returns></returns>
         [HttpGet("catalog")]
         [AllowAnonymous]
@@ -40,17 +40,35 @@ namespace Vk_server
         }
 
         /// <summary>
-        /// Returns info about all events
+        /// get clothing
         /// </summary>
         /// <param name="clothingId">sex</param>
+        /// <param name="userId">sex</param>
         /// <returns></returns>
         [HttpGet("clothing")]
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetClothing(long clothingId)
+        public async Task<IActionResult> GetClothing(long clothingId, long userId)
         {
-            var result = await _shopService.GetClothingAsync(clothingId);
+            var result = await _shopService.GetClothingAsync(clothingId,  userId);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        ///  Get render photo
+        /// </summary>
+        /// <param name="clothingId">sex</param>
+        /// <param name="userId">sex</param>
+        /// <returns></returns>
+        [HttpGet("renderPhoto")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetRenderPhoto(long clothingId, long userId)
+        {
+            var result = await _shopService.GetRenderPhotoAsync(clothingId,  userId);
 
             return Ok(result);
         }

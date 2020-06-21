@@ -14,14 +14,14 @@ namespace Vk_server
         IRepository <User> Users { get;  }
         IRepository <OAuthClientDetail> OAuthClientDetails { get; }
         IRepository <PhotoHuman> PhotoHumans { get; }
-        IRepository <Size> Sizes { get; }
+        IRepository <UserParameter> UserParameters { get; }
         IRepository <Clothing> Clothings { get; }
         IRepository <Sex> Sexs { get; }
         IRepository <Basket> Baskets { get; }
         IRepository <ClothingSize> ClothingSizes { get; }
         IRepository <Shop> Shops { get; }
         IRepository <RenderPhoto> RenderPhotos { get; }
-
+        IRepository <Size> Sizes { get; }
         
 
         #endregion

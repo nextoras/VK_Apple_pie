@@ -15,13 +15,14 @@ namespace Vk_server
         private IRepository<User> _user;
         private IRepository<OAuthClientDetail> _oAuthClientDetail;
         private IRepository<PhotoHuman> _photoHuman;
-        private IRepository<Size> _size;
+        private IRepository<UserParameter> _userParameter;
         private IRepository<Clothing> _clothing;
         private IRepository<Sex> _sex;
         private IRepository<Basket> _basket;
         private IRepository<ClothingSize> _clothingSize;
         private IRepository<Shop> _shop;
         private IRepository<RenderPhoto> _renderPhoto;
+        private IRepository<Size> _size;
 
         #endregion
 
@@ -39,8 +40,8 @@ namespace Vk_server
             _oAuthClientDetail ?? (_oAuthClientDetail = new Repository<OAuthClientDetail>(_context));
         public IRepository<PhotoHuman> PhotoHumans =>
         _photoHuman ?? (_photoHuman = new Repository<PhotoHuman>(_context));
-        public IRepository<Size> Sizes =>
-        _size ?? (_size = new Repository<Size>(_context));
+        public IRepository<UserParameter> UserParameters =>
+        _userParameter ?? (_userParameter = new Repository<UserParameter>(_context));
         public IRepository<Clothing> Clothings =>
         _clothing ?? (_clothing = new Repository<Clothing>(_context));
         public IRepository<Sex> Sexs =>
@@ -54,6 +55,9 @@ namespace Vk_server
 
         public IRepository<RenderPhoto> RenderPhotos =>
         _renderPhoto ?? (_renderPhoto = new Repository<RenderPhoto>(_context));
+
+        public IRepository<Size> Sizes =>
+        _size ?? (_size = new Repository<Size>(_context));
 
         #endregion
 

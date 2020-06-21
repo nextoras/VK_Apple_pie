@@ -12,8 +12,9 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using AutoMapper;
-
-
+using System.Drawing;
+using form = SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Vk_server
 {
@@ -22,14 +23,17 @@ namespace Vk_server
 
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
+        private readonly IFileWorkService _fileWorkService;
 
         public PythonServerService(
             IUnitOfWork uow,
             IMapper mapper,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IFileWorkService fileWorkService)
         {
             _uow = uow;
             _mapper = mapper;
+            _fileWorkService = fileWorkService;
         }
 
         public async Task<string> AuthorizeAsync()
@@ -38,14 +42,26 @@ namespace Vk_server
             return result.About;
         }
 
-        public async Task SendPhotosForSizesAsync(IFormFile photo1, IFormFile photo2)
+        public async Task SendPhotosForSizesAsync(long clothingId, long userId)
         {
+            var user = await _uow.Users.GetByIdAsync(userId);
+            var userPhotoPath = await _uow.PhotoHumans.Query()
+                .Where(b => b.UserId == user.Id).FirstOrDefaultAsync();
+
+            var clothingPhoto = await _uow.Clothings.GetByIdAsync(clothingId);
+
+            
+            Image imageUser = Image.FromFile("wwwroot" + userPhotoPath.PhotoPath);
+            Image imageClothing = Image.FromFile("wwwroot" + clothingPhoto.Picture);
+
+            //IFormFile photo1, IFormFile photo2,
             SizePhotosBindingModel requestBody = new SizePhotosBindingModel
             {
-                PhotoFront = photo1,
-                PhotoSide = photo2
+                PhotoFront = imageUser,
+                PhotoSide = imageClothing,
+                UserId = userId
             };
-            var uri ="";
+            var uri = "http://127.0.0.1:5001/";
 
             HttpClient client = new HttpClient();
 
@@ -57,24 +73,35 @@ namespace Vk_server
 
         public async Task SaveSizesAsync(ReadySizesBindingModel model)
         {
-            var userSizes = await _uow.Sizes.Query()
+            var userSizes = await _uow.UserParameters.Query()
                 .Where(us => us.UserId == model.UserId).FirstOrDefaultAsync();
 
             if (userSizes != null)
             {
                 var id = userSizes.Id;
-                _mapper.Map<ReadySizesBindingModel, Size>(model, userSizes);
+                _mapper.Map<ReadySizesBindingModel, UserParameter>(model, userSizes);
                 userSizes.Id = id;
-                _uow.Sizes.Update(userSizes);
-            } 
+                _uow.UserParameters.Update(userSizes);
+            }
             else
             {
-                userSizes = _mapper.Map<Size>(model);
+                userSizes = _mapper.Map<UserParameter>(model);
 
-                await _uow.Sizes.CreateRAsync(userSizes);
+                await _uow.UserParameters.CreateRAsync(userSizes);
             }
 
             await _uow.SaveChangesAsync();
+        }
+
+        public async Task SaveRenderPhotoAsync(IFormFile photo, long clothingId, long userId)
+        {
+            var photoPath = _fileWorkService.PhotoSave(photo);
+            await _uow.RenderPhotos.CreateRAsync(new RenderPhoto()
+            {
+                PhotoPath = photoPath,
+                UserId = userId,
+                ClothingId = clothingId
+            });
         }
     }
 

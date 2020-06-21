@@ -13,13 +13,14 @@ namespace Vk_server
         public DbSet<User> Users { get; set; }
         public DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
         public DbSet<PhotoHuman> PhotoHumans { get; set; }
-        public DbSet<Size> Sizes { get; set; }
+        public DbSet<UserParameter> UserParameters { get; set; }
         public DbSet<Clothing> Clothings { get; set; }
         public DbSet<Sex> Sexs { get; set; }
         public DbSet<Basket> Baskets { get; set; }
-        public DbSet<ClothingSize> ClothingSizes { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<RenderPhoto> RenderPhotos { get; set; }
+       // public DbSet<SizesType> SizesTypes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -33,6 +34,12 @@ namespace Vk_server
             {
                 table.UserId,
                 table.ClothingId
+            });
+
+            modelBuilder.Entity<ClothingSize>().HasKey(table => new
+            {
+                table.ClothingId,
+                table.SizeId
             });
         }
     }
@@ -56,8 +63,8 @@ namespace Vk_server
         [ForeignKey("SexId")]
         public virtual Sex Sex { get; set; }
 
-        [ForeignKey("SizeId")]
-        public virtual Size Size { get; set; }
+        [ForeignKey("UserParameterId")]
+        public virtual UserParameter UserParameter { get; set; }
     }
 
     public class OAuthClientDetail
@@ -96,7 +103,7 @@ namespace Vk_server
         public virtual User User { get; set; }
     }
 
-    public class Size
+    public class UserParameter
     {
         public long Id { get; set; }
         public double Chest { get; set; }
@@ -120,13 +127,9 @@ namespace Vk_server
         public string Picture { get; set; }
         public string About { get; set; }
         public decimal Price { get; set; }
-        public long? ClothingSizeId { get; set; }
         public string Type { get; set; }
         public string Link { get; set; }
         public long ShopId { get; set; }
-
-        [ForeignKey("ClothingSizeId")]
-        public virtual ClothingSize ClothingSize { get; set; }
 
         [ForeignKey("ShopId")]
         public virtual Shop Shop { get; set; }
@@ -138,7 +141,7 @@ namespace Vk_server
         public string Name { get; set; }
     }
 
-    public class ClothingSize
+    public class Size
     {
         public long Id { get; set; }
         public string SizeName { get; set; }
@@ -156,6 +159,18 @@ namespace Vk_server
         [ForeignKey("ClothingId")]
         public virtual Clothing Clothing { get; set; }
         
+    }
+
+    public class ClothingSize
+    {
+        public long ClothingId { get; set; }
+        public long SizeId { get; set; }
+
+        [ForeignKey("ClothingId")]
+        public virtual Clothing Clothing { get; set; }
+
+        [ForeignKey("SizeId")]
+        public virtual Size Size { get; set; }
     }
 
     public class Shop
