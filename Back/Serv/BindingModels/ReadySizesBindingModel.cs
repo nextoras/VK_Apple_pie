@@ -10,13 +10,11 @@ namespace Vk_server
     public class ReadySizesBindingModel
     {
         [Required]
-        public long UserId { get; set; }
-        public double Chest { get; set; }
-        public double Waist { get; set; }
-        public double Hips { get; set; }
-        public double Shulders { get; set; }
-        public double Pelvic { get; set; }
-        public double Legs { get; set; }
-        public double Foots { get; set; }
+        public long userId { get; set; }
+        public double chest { get; set; }
+        public double waist { get; set; }
+        public double hips { get; set; }
+        public double leg { get; set; }
+        public string parts_coordinates { get; set; }
     }
 }

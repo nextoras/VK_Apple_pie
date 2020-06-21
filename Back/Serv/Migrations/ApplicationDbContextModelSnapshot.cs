@@ -19,19 +19,6 @@ namespace Vk_server.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Vk_server.Basket", b =>
-                {
-                    b.Property<long>("UserId");
-
-                    b.Property<long>("ClothingId");
-
-                    b.HasKey("UserId", "ClothingId");
-
-                    b.HasIndex("ClothingId");
-
-                    b.ToTable("Baskets");
-                });
-
             modelBuilder.Entity("Vk_server.Clothing", b =>
                 {
                     b.Property<long>("Id")
@@ -97,8 +84,6 @@ namespace Vk_server.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Coordinates");
 
                     b.Property<string>("PhotoPath");
 
@@ -166,9 +151,9 @@ namespace Vk_server.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<double?>("SizeN");
-
                     b.Property<string>("SizeName");
+
+                    b.Property<string>("SizesType");
 
                     b.HasKey("Id");
 
@@ -181,6 +166,8 @@ namespace Vk_server.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName");
+
+                    b.Property<long>("Height");
 
                     b.Property<bool>("IsSizeRight");
 
@@ -214,15 +201,17 @@ namespace Vk_server.Migrations
 
                     b.Property<double>("Chest");
 
-                    b.Property<double>("Foots");
-
                     b.Property<double>("Hips");
 
                     b.Property<double>("Legs");
 
-                    b.Property<double>("Pelvic");
+                    b.Property<string>("PartsCoordinates");
 
-                    b.Property<double>("Shulders");
+                    b.Property<long?>("SizeDownId");
+
+                    b.Property<long?>("SizeMiddleId");
+
+                    b.Property<long?>("SizeUpId");
 
                     b.Property<long>("UserId");
 
@@ -230,23 +219,16 @@ namespace Vk_server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SizeDownId");
+
+                    b.HasIndex("SizeMiddleId");
+
+                    b.HasIndex("SizeUpId");
+
                     b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("UserParameters");
-                });
-
-            modelBuilder.Entity("Vk_server.Basket", b =>
-                {
-                    b.HasOne("Vk_server.Clothing", "Clothing")
-                        .WithMany()
-                        .HasForeignKey("ClothingId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Vk_server.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vk_server.Clothing", b =>
@@ -309,6 +291,18 @@ namespace Vk_server.Migrations
 
             modelBuilder.Entity("Vk_server.UserParameter", b =>
                 {
+                    b.HasOne("Vk_server.Size", "SizeDown")
+                        .WithMany()
+                        .HasForeignKey("SizeDownId");
+
+                    b.HasOne("Vk_server.Size", "SizeMiddle")
+                        .WithMany()
+                        .HasForeignKey("SizeMiddleId");
+
+                    b.HasOne("Vk_server.Size", "SizeUp")
+                        .WithMany()
+                        .HasForeignKey("SizeUpId");
+
                     b.HasOne("Vk_server.User", "User")
                         .WithOne()
                         .HasForeignKey("Vk_server.UserParameter", "UserId")

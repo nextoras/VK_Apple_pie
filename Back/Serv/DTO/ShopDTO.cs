@@ -30,8 +30,8 @@ namespace Vk_server
 
     public class SizeDTO
     {
-        public long id { get; set;}
-        public string SizeName { get; set;}
-        public  double? SizeN { get; set; }
+        public long Id { get; set; }
+        public string SizeName { get; set; }
+        public string SizesType { get; set; }
     }
 }

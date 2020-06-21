@@ -11,17 +11,20 @@ namespace Vk_server
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long SexId { get; set; }
-        public UserParametersDTO Sizes { get; set; }
+        public UserParametersDTO UserParameters { get; set; }
     }
 
     public class UserParametersDTO
     {
+        public long Id { get; set; }
         public double Chest { get; set; }
         public double Waist { get; set; }
         public double Hips { get; set; }
-        public double Shulders { get; set; }
-        public double Pelvic { get; set; }
         public double Legs { get; set; }
-        public double Foots { get; set; }
+        public long? SizeUpId { get; set; }
+        public long? SizeMiddleId { get; set; }
+        public long? SizeDownId { get; set; }
+        public string PartsCoordinates { get; set; }
+        public long UserId { get; set; }
     }
 }

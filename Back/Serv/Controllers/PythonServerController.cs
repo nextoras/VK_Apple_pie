@@ -25,23 +25,7 @@ namespace Vk_server
         }
 
         /// <summary>
-        /// Returns info about all events
-        /// </summary>
-        /// <param name="model">model</param>
-        /// <returns></returns>
-        [HttpPost("sizes")]
-        [AllowAnonymous]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> Authorization([FromBody] ReadySizesBindingModel model)
-        {
-            await _pythonServerService.SaveSizesAsync(model);
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Returns info about all events
+        /// GetSizes
         /// </summary>
         /// <param name="model">model</param>
         /// <returns></returns>
@@ -57,15 +41,15 @@ namespace Vk_server
         }
 
         /// <summary>
-        /// Returns info about all events
+        /// SaveRenderPhoto
         /// </summary>
         /// <param name="model">model</param>
         /// <returns></returns>
-        [HttpPost("rednder")]
+        [HttpPost("pushRednderPhoto")]
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> SaveRenderPhoto([FromBody] RenderPhotoBindingModel model)
+        public async Task<IActionResult> SaveRenderPhoto( RenderPhotoBindingModel model)
         {
             await _pythonServerService.SaveRenderPhotoAsync(model.Photo, model.ClothingId, model.UserId);
 

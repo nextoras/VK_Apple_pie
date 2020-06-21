@@ -15,8 +15,6 @@ namespace Vk_server
         /// Фронтальное фото
         /// </summary>
         public IFormFile Photo { get; set; }
-
-
         public long ClothingId { get; set; }
 
         public long UserId { get; set; }

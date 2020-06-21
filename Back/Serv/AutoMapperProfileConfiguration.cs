@@ -17,9 +17,9 @@ namespace Vk_server
             CreateMap<ClotheDTO, Clothing>();
 
             CreateMap<UserDTO, User>()
-                .ForMember(dest => dest.UserParameter, func => func.MapFrom(src => src.Sizes));
+                .ForMember(dest => dest.UserParameter, func => func.MapFrom(src => src.UserParameters));
             CreateMap<User, UserDTO>()
-                .ForMember(dest => dest.Sizes, func => func.MapFrom(src => src.SizeId)); ;
+                .ForMember(dest => dest.UserParameters, func => func.MapFrom(src => src.SizeId)); ;
 
             CreateMap<Clothing, ClotheDTOFull>();
             CreateMap<ClotheDTOFull, Clothing>();

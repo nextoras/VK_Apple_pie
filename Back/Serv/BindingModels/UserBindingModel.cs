@@ -9,8 +9,6 @@ namespace Vk_server
 {
     public class UserPhotosBindingModel
     {
-
-       
         [Required]
         public long UserId { get; set; }
 
@@ -20,6 +18,8 @@ namespace Vk_server
         public IFormFile PhotoFront { get; set; }
 
         public IFormFile PhotoSide { get; set; }
+
+        public long Height { get; set; }
 
         
     }

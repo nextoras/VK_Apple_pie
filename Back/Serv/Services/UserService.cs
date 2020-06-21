@@ -9,6 +9,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using System.Drawing;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 
 
 namespace Vk_server
@@ -41,11 +45,13 @@ namespace Vk_server
             return result.About;
         }
 
-        public async Task<bool> PushPhotoAsync(IFormFile photo1, IFormFile photo2, long userId)
+        public async Task<bool> PushPhotoAsync(IFormFile photo1, IFormFile photo2, long userId, long height)
         {
             var user = await _uow.Users.Query().Where(q => q.VkId == userId).FirstOrDefaultAsync();
 
             if (user == null) throw new Exception("Юзер не найден");
+
+            user.Height = height;
 
             var userPhotos = await _uow.PhotoHumans.Query()
                 .Where(s => s.UserId == user.Id).ToListAsync();
@@ -79,7 +85,35 @@ namespace Vk_server
                 PhotoPath = srcPathSide
             });
 
+            _uow.Users.Update(user);
+
             await _uow.SaveChangesAsync();
+
+            try
+            {
+                Image imageUser = Image.FromFile("wwwroot" + srcPath);
+                Image imageClothing = Image.FromFile("wwwroot" + srcPathSide);
+
+                //IFormFile photo1, IFormFile photo2,
+                SizePhotosBindingModel requestBody = new SizePhotosBindingModel
+                {
+                    PhotoFront = imageUser,
+                    PhotoSide = imageClothing,
+                    UserId = userId,
+                    Height = user.Height
+                };
+                var uri = "https://6923ece9f762.ngrok.io/sizes";
+
+                HttpClient client = new HttpClient();
+
+                client.BaseAddress = new Uri(uri);
+                var response = await client.PostAsJsonAsync("", requestBody);
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Server isn't reachable ");
+            }
 
             return true;
         }
@@ -92,7 +126,7 @@ namespace Vk_server
             if (user == null) throw new Exception("User не найден");
 
             UserDTO userDTO = new UserDTO();
-            userDTO.Sizes = new UserParametersDTO();
+            userDTO.UserParameters = new UserParametersDTO();
             UserParametersDTO sizeDTO = new UserParametersDTO();
 
             var sizes = await _uow.UserParameters.Query()
@@ -103,7 +137,7 @@ namespace Vk_server
             if (sizes != null)
             {
                 sizeDTO = _mapper.Map<UserParametersDTO>(sizes);
-                userDTO.Sizes = sizeDTO;
+                userDTO.UserParameters = sizeDTO;
             }
 
             return userDTO;

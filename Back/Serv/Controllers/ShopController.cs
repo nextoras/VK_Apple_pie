@@ -32,9 +32,9 @@ namespace Vk_server
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetAll(long sexId)
+        public async Task<IActionResult> GetAll()
         {
-            var result = await _shopService.GetAllAsync(sexId);
+            var result = await _shopService.GetAllAsync();
 
             return Ok(result);
         }
@@ -62,7 +62,7 @@ namespace Vk_server
         /// <param name="clothingId">sex</param>
         /// <param name="userId">sex</param>
         /// <returns></returns>
-        [HttpGet("renderPhoto")]
+        [HttpGet("getRenderPhoto")]
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

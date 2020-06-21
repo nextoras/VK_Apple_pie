@@ -35,7 +35,7 @@ namespace Vk_server
         [ProducesResponseType(404)]
         public async Task<IActionResult> PutPhoto(UserPhotosBindingModel model)
         {
-            var result = await _userService.PushPhotoAsync(model.PhotoFront, model.PhotoSide, model.UserId);
+            var result = await _userService.PushPhotoAsync(model.PhotoFront, model.PhotoSide, model.UserId, model.Height);
 
             return Ok();
         }
@@ -43,7 +43,7 @@ namespace Vk_server
         /// <summary>
         /// get user info
         /// </summary>
-        /// <param name="userId">binding model</param>
+        /// <param name="userId">userId</param>
         /// <returns></returns>
         [HttpGet("get_user")]
         [AllowAnonymous]

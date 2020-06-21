@@ -17,7 +17,7 @@ namespace Vk_server
         IRepository <UserParameter> UserParameters { get; }
         IRepository <Clothing> Clothings { get; }
         IRepository <Sex> Sexs { get; }
-        IRepository <Basket> Baskets { get; }
+        // IRepository <Basket> Baskets { get; }
         IRepository <ClothingSize> ClothingSizes { get; }
         IRepository <Shop> Shops { get; }
         IRepository <RenderPhoto> RenderPhotos { get; }

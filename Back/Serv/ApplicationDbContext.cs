@@ -16,11 +16,11 @@ namespace Vk_server
         public DbSet<UserParameter> UserParameters { get; set; }
         public DbSet<Clothing> Clothings { get; set; }
         public DbSet<Sex> Sexs { get; set; }
-        public DbSet<Basket> Baskets { get; set; }
+        // public DbSet<Basket> Baskets { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<RenderPhoto> RenderPhotos { get; set; }
-       // public DbSet<SizesType> SizesTypes { get; set; }
+        // public DbSet<SizesType> SizesTypes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -30,11 +30,11 @@ namespace Vk_server
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Basket>().HasKey(table => new
-            {
-                table.UserId,
-                table.ClothingId
-            });
+            // modelBuilder.Entity<Basket>().HasKey(table => new
+            // {
+            //     table.UserId,
+            //     table.ClothingId
+            // });
 
             modelBuilder.Entity<ClothingSize>().HasKey(table => new
             {
@@ -44,7 +44,7 @@ namespace Vk_server
         }
     }
 
-    
+
 
     public class User
     {
@@ -56,6 +56,7 @@ namespace Vk_server
         public long SexId { get; set; }
         public long? SizeId { get; set; }
         public bool IsSizeRight { get; set; }
+        public long Height { get; set; }
 
         [ForeignKey("OAuthClientDetailId")]
         public virtual OAuthClientDetail OAuthClientDetail { get; set; }
@@ -85,8 +86,6 @@ namespace Vk_server
         public long UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
-
-        public string Coordinates { get; set; }
     }
 
     public class RenderPhoto
@@ -109,11 +108,21 @@ namespace Vk_server
         public double Chest { get; set; }
         public double Waist { get; set; }
         public double Hips { get; set; }
-        public double Shulders { get; set; }
-        public double Pelvic { get; set; }
         public double Legs { get; set; }
-        public double Foots { get; set; }
+        public long? SizeUpId { get; set; }
+        public long? SizeMiddleId { get; set; }
+        public long? SizeDownId { get; set; }
+        public string PartsCoordinates { get; set; }
         public long UserId { get; set; }
+
+        [ForeignKey("SizeUpId")]
+        public virtual Size SizeUp { get; set; }
+
+        [ForeignKey("SizeMiddleId")]
+        public virtual Size SizeMiddle { get; set; }
+
+        [ForeignKey("SizeDownId")]
+        public virtual Size SizeDown { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
@@ -145,21 +154,21 @@ namespace Vk_server
     {
         public long Id { get; set; }
         public string SizeName { get; set; }
-        public double? SizeN { get; set; }
+        public string SizesType { get; set; }
     }
 
-    public class Basket
-    {
-        public long UserId { get; set; }
-        public long ClothingId { get; set; }
+    // public class Basket
+    // {
+    //     public long UserId { get; set; }
+    //     public long ClothingId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+    //     [ForeignKey("UserId")]
+    //     public virtual User User { get; set; }
 
-        [ForeignKey("ClothingId")]
-        public virtual Clothing Clothing { get; set; }
-        
-    }
+    //     [ForeignKey("ClothingId")]
+    //     public virtual Clothing Clothing { get; set; }
+
+    // }
 
     public class ClothingSize
     {

@@ -23,6 +23,7 @@ namespace Vk_server
         public Image PhotoSide { get; set; }
 
         public long UserId { get; set; }
+        public long Height { get; set;}
 
 
     }

@@ -18,7 +18,7 @@ namespace Vk_server
         private IRepository<UserParameter> _userParameter;
         private IRepository<Clothing> _clothing;
         private IRepository<Sex> _sex;
-        private IRepository<Basket> _basket;
+        // private IRepository<Basket> _basket;
         private IRepository<ClothingSize> _clothingSize;
         private IRepository<Shop> _shop;
         private IRepository<RenderPhoto> _renderPhoto;
@@ -46,8 +46,8 @@ namespace Vk_server
         _clothing ?? (_clothing = new Repository<Clothing>(_context));
         public IRepository<Sex> Sexs =>
         _sex ?? (_sex = new Repository<Sex>(_context));
-        public IRepository<Basket> Baskets =>
-        _basket ?? (_basket = new Repository<Basket>(_context));
+        // public IRepository<Basket> Baskets =>
+        // _basket ?? (_basket = new Repository<Basket>(_context));
         public IRepository<ClothingSize> ClothingSizes =>
         _clothingSize ?? (_clothingSize = new Repository<ClothingSize>(_context));
         public IRepository<Shop> Shops =>

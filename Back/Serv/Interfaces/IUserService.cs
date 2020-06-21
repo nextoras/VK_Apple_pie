@@ -7,7 +7,7 @@ namespace Vk_server
 {
     public interface IUserService
     {
-        Task <bool> PushPhotoAsync(IFormFile photo1, IFormFile photo2, long userId);
+        Task <bool> PushPhotoAsync(IFormFile photo1, IFormFile photo2, long userId, long height);
         Task<UserDTO> GetUserInfoAsync(long userId);
     }
 }

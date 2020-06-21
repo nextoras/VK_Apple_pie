@@ -34,10 +34,9 @@ namespace Vk_server
             _pythonServerService = pythonServerService;
         }
 
-        public async Task<ShopDTO> GetAllAsync(long sexId)
+        public async Task<ShopDTO> GetAllAsync()
         {
-            var clotheCollection = await _uow.Clothings.Query()
-                .Where(c => c.SexId == sexId).ToListAsync();
+            var clotheCollection = await _uow.Clothings.Query().ToListAsync();
 
             ShopDTO clotheCollectionDTO = new ShopDTO();
             List<ClotheDTO> clotheDTOs = new List<ClotheDTO>();
@@ -77,8 +76,7 @@ namespace Vk_server
                     result.SizeDTOs.Add(sizeDTO);
                 }
             }
-
-            await _pythonServerService.SendPhotosForSizesAsync(clothingId, userId);
+            if (clothe.Type != "Pants") await _pythonServerService.SendPhotosForSizesAsync(clothingId, userId);
             return result;
         }
 

@@ -59,9 +59,10 @@ namespace Vk_server
             {
                 PhotoFront = imageUser,
                 PhotoSide = imageClothing,
-                UserId = userId
+                UserId = userId,
+                Height = user.Height
             };
-            var uri = "http://127.0.0.1:5001/";
+            var uri = "https://6923ece9f762.ngrok.io/sizes/";
 
             HttpClient client = new HttpClient();
 
@@ -74,18 +75,44 @@ namespace Vk_server
         public async Task SaveSizesAsync(ReadySizesBindingModel model)
         {
             var userSizes = await _uow.UserParameters.Query()
-                .Where(us => us.UserId == model.UserId).FirstOrDefaultAsync();
+                .Where(us => us.UserId == model.userId).FirstOrDefaultAsync();
 
             if (userSizes != null)
             {
                 var id = userSizes.Id;
                 _mapper.Map<ReadySizesBindingModel, UserParameter>(model, userSizes);
                 userSizes.Id = id;
+                
                 _uow.UserParameters.Update(userSizes);
             }
             else
             {
                 userSizes = _mapper.Map<UserParameter>(model);
+
+                //определение размера по данным
+                
+                //верх
+                if (model.chest < 89) userSizes.SizeUpId = 1;
+                if (model.chest >= 89 && model.chest < 93) userSizes.SizeUpId = 2;
+                if (model.chest >= 93 && model.chest < 97) userSizes.SizeUpId = 3;
+                if (model.chest >= 97 && model.chest < 102) userSizes.SizeUpId = 4;
+
+                //торс
+                if (model.waist < 72) userSizes.SizeMiddleId = 5;
+                if (model.waist >= 72 && model.waist < 75) userSizes.SizeMiddleId = 6;
+                if (model.waist >= 75 && model.waist < 77.5) userSizes.SizeMiddleId = 7;
+                if (model.waist >= 77.5 && model.waist < 80) userSizes.SizeMiddleId = 8;
+                if (model.waist >= 80 && model.waist < 82.5) userSizes.SizeMiddleId = 9;
+                if (model.waist >= 82.5 && model.waist < 85) userSizes.SizeMiddleId = 10;
+                if (model.waist >= 85 && model.waist < 87.5) userSizes.SizeMiddleId = 11;
+                if (model.waist >= 87.5 && model.waist < 92.5) userSizes.SizeMiddleId = 12;
+                if (model.waist >= 92.5 && model.waist < 100) userSizes.SizeMiddleId = 13;
+
+                //низ
+                if (model.leg < 77) userSizes.SizeDownId = 14;
+                if (model.waist >= 77 && model.waist < 82) userSizes.SizeMiddleId = 15;
+                if (model.waist >= 82 && model.waist < 87) userSizes.SizeMiddleId = 16;
+                
 
                 await _uow.UserParameters.CreateRAsync(userSizes);
             }
